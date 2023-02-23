@@ -66,7 +66,7 @@
 enum sofle_layers {
     _DEFAULTS = 0,
     _QWERTY = 0,
-	_COLEMAKDH,
+    _COLEMAKDH,
     _LOWER,
     _RAISE,
     _ADJUST,
@@ -76,7 +76,7 @@ enum sofle_layers {
 
 enum custom_keycodes {
     KC_QWERTY = SAFE_RANGE,
-	KC_COLEMAKDH,
+    KC_COLEMAKDH,
     KC_LOWER,
     KC_RAISE,
     KC_ADJUST,
