@@ -71,7 +71,7 @@ enum sofle_layers {
     _RAISE,
     _ADJUST,
     _NUMPAD,
-    _SWITCH
+    // _SWITCH
 };
 
 enum custom_keycodes {
@@ -101,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
   [_QWERTY] = LAYOUT(
   //,------------------------------------------------.                    ,---------------------------------------------------.
-  KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,             LT(_SWITCH,KC_6), KC_7,   KC_8,    KC_9,    KC_0,    KC_GRV,
+  KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,             KC_6, KC_7,   KC_8,    KC_9,    KC_0,    KC_GRV,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
   LT(_NUMPAD,KC_TAB),KC_Q,KC_W,KC_E,  KC_R,    KC_T,                      KC_Y,    KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPC,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
@@ -131,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_COLEMAKDH] = LAYOUT(
   //,------------------------------------------------.                    ,---------------------------------------------------.
-  _______,  KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                      LT(_SWITCH,KC_6),    KC_7,   KC_8,    KC_9,    KC_0,    _______,
+  _______,  KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,   KC_8,    KC_9,    KC_0,    _______,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
   _______,  KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                      KC_J,    KC_L,   KC_U,    KC_Y,    KC_SCLN, _______,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
@@ -251,36 +251,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               _______, OSM(MOD_MEH), _______, _______, _______,   _______, _______,  KC_P0,   KC_PDOT, _______
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
 ),
-
-/* SWITCH
- * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | qwer | cole |col_dh| low  | raise| adj  |                    |numpad|      |      |      |      |QK_BOOT |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------.    ,-------|      |      |      |      |      |EE_CLR|
- * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * | SLEEP|      |      |      |      |      |-------|    |-------|      |      |      |      |      |      |
- * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | Bspc | WIN  |LOWER | Enter| /Space  /       \Enter \  |SPACE | 0    |  .   | RAlt |
- *            |      |      |      |      |/       /         \      \ |      |      |      |      |
- *            `----------------------------------'           '------''---------------------------'
- */
-  // layer switcher
-[_SWITCH] = LAYOUT(
-  //,------------------------------------------------.                    ,---------------------------------------------------.
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,XXXXXXX, XXXXXXX,
-  //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  TO(0),   TO(1),   TO(2),   TO(3),   TO(4),   TO(5),                      TO(6),   KC_NO,   KC_NO,   KC_NO,   KC_NO,   QK_BOOT,
-  //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  KC_NO,   KC_NO, KC_BRIU,   KC_NO,   KC_NO,   KC_NO,                      KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   EE_CLR,
-  //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-  KC_SYSTEM_SLEEP,KC_NO,KC_NO,KC_NO,  KC_NO,   KC_NO, KC_NO,      KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,
-  //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-                  KC_NO,    KC_NO,   KC_NO,   KC_NO,   KC_NO,     KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO
-  //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
-
-	),
 };
 
 #ifdef RGBLIGHT_ENABLE
@@ -351,7 +321,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 	rgblight_set_layer_state(2, layer_state_cmp(state, _RAISE));
 	rgblight_set_layer_state(3, layer_state_cmp(state, _ADJUST));
 	rgblight_set_layer_state(4, layer_state_cmp(state, _NUMPAD));
-	rgblight_set_layer_state(5, layer_state_cmp(state, _SWITCH));
     return state;
 }
 void keyboard_post_init_user(void) {
@@ -415,9 +384,6 @@ static void print_status_narrow(void) {
             break;
         case _NUMPAD:
             oled_write_P(PSTR("Nump\n"), false);
-            break;
-        case _SWITCH:
-            oled_write_P(PSTR("Swit\n"), false);
             break;
         default:
             oled_write_ln_P(PSTR("Undef"), false);
