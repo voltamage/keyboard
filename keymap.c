@@ -169,7 +169,7 @@ static void print_status_narrow(void) {
             oled_write_ln_P(PSTR("CmkDH"), false);
             break;
         case _QWERTY:
-            oled_write_ln_P(PSTR("Qwrt"), false);
+            oled_write_ln_P(PSTR("Qwrt\n"), false);
             break;
         default:
             oled_write_ln_P(PSTR("Undef"), false);
