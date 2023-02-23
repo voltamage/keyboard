@@ -71,7 +71,6 @@ enum sofle_layers {
     _RAISE,
     _ADJUST,
     _NUMPAD,
-    // _SWITCH
 };
 
 enum custom_keycodes {
