@@ -20,16 +20,16 @@
 
 enum sofle_layers {
     _DEFAULTS = 0,
-    _QWERTY = 0,
-    _COLEMAKDH,
+    _COLEMAKDH = 0,
+    _QWERTY,
     _LOWER,
     _RAISE,
     _ADJUST,
 };
 
 enum custom_keycodes {
-    KC_QWERTY = SAFE_RANGE,
-    KC_COLEMAKDH,
+    KC_COLEMAKDH = SAFE_RANGE,
+    KC_QWERTY,
     KC_LOWER,
     KC_RAISE,
     KC_ADJUST,
@@ -51,11 +51,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
  *            `----------------------------------'           '------''---------------------------'
  */
-[_QWERTY] = LAYOUT(
+[_COLEMAKDH] = LAYOUT(
   KC_ESC,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,                         KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_GRV,
-  KC_TAB,   KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,                         KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,     KC_BSPC,
-  KC_LSFT,  KC_A,     KC_S,     KC_D,     KC_F,     KC_G,                         KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,  KC_QUOT,
-  KC_LCTL,  KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_MUTE,  KC_MUTE,  KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,  KC_LSFT,
+  KC_TAB,   KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,                         KC_J,     KC_L,     KC_U,     KC_Y,     KC_SCLN,  KC_BSPC,
+  KC_LSFT,  KC_A,     KC_R,     KC_S,     KC_T,     KC_G,                         KC_M,     KC_N,     KC_E,     KC_I,     KC_O,     KC_QUOT,
+  KC_LCTL,  KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,     KC_MUTE,  KC_MUTE,  KC_K,     KC_H,     KC_COMM,  KC_DOT,   KC_SLSH,  KC_LSFT,
                       KC_BSPC,  KC_LGUI,  KC_LOWER, KC_SPC,   KC_ENT,   KC_SPC,   KC_ENT ,  KC_RAISE, KC_RCTL,  KC_RALT
 ),
 
@@ -75,11 +75,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
  *            `----------------------------------'           '------''---------------------------'
  */
-[_COLEMAKDH] = LAYOUT(
+[_QWERTY] = LAYOUT(
   _______,  _______,  _______,  _______,  _______,  _______,                      _______,  _______,  _______,  _______,  _______,  _______,
-  _______,  KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,                         KC_J,     KC_L,     KC_U,     KC_Y,     KC_SCLN,  _______,
-  _______,  KC_A,     KC_R,     KC_S,     KC_T,     KC_G,                         KC_M,     KC_N,     KC_E,     KC_I,     KC_O,     _______,
-  _______,  KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,     _______,  _______,  KC_K,     KC_H,     KC_COMM,  KC_DOT,   KC_SLSH,  _______,
+  _______,  KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,                         KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,     _______,
+  _______,  KC_A,     KC_S,     KC_D,     KC_F,     KC_G,                         KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,  _______,
+  _______,  KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     _______,  _______,  KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,  _______,
                       _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______
 ),
 
@@ -171,13 +171,12 @@ static void print_status_narrow(void) {
 
 
     switch (get_highest_layer(default_layer_state)) {
-        case _QWERTY:
-            oled_write_ln_P(PSTR("Qwrt"), false);
-            break;
         case _COLEMAKDH:
             oled_write_ln_P(PSTR("CmkDH"), false);
             break;
-
+        case _QWERTY:
+            oled_write_ln_P(PSTR("Qwrt"), false);
+            break;
         default:
             oled_write_ln_P(PSTR("Undef"), false);
     }
@@ -185,8 +184,8 @@ static void print_status_narrow(void) {
     // Print current layer
     oled_write_ln_P(PSTR("LAYER"), false);
     switch (get_highest_layer(layer_state)) {
-        case _QWERTY:
         case _COLEMAKDH:
+        case _QWERTY:
             oled_write_P(PSTR("Base\n"), false);
             break;
         case _RAISE:
@@ -223,14 +222,14 @@ bool oled_task_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case KC_QWERTY:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_QWERTY);
-            }
-            return false;
         case KC_COLEMAKDH:
             if (record->event.pressed) {
                 set_single_persistent_default_layer(_COLEMAKDH);
+            }
+            return false;
+        case KC_QWERTY:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_QWERTY);
             }
             return false;
         case KC_LOWER:
