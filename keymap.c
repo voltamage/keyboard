@@ -70,7 +70,6 @@ enum sofle_layers {
     _LOWER,
     _RAISE,
     _ADJUST,
-    _NUMPAD,
 };
 
 enum custom_keycodes {
@@ -102,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,------------------------------------------------.                    ,---------------------------------------------------.
   KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,             KC_6, KC_7,   KC_8,    KC_9,    KC_0,    KC_GRV,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  LT(_NUMPAD,KC_TAB),KC_Q,KC_W,KC_E,  KC_R,    KC_T,                      KC_Y,    KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPC,
+  KC_TAB,KC_Q,KC_W,KC_E,  KC_R,    KC_T,                      KC_Y,    KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPC,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
   KC_LSFT,  KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,   KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
@@ -223,33 +222,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                    _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______
     //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
 ),
-/* NUMPAD
- * ,-----------------------------------------.                    ,-----------------------------------------.
- * | trans|      |      |      |      |      |                    |      |NumLck|      |      |      |      |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |  `   |      |      |      |      |      |                    |   ^  |   7  |   8  |   9  |   *  |      |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | trans|      |      |      |      |      |-------.    ,-------|   -  |   4  |   5  |   6  |      |   |  |
- * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * | trans|      |      |      |      |      |-------|    |-------|   +  |   1  |   2  |   3  |   \  | Shift|
- * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | Bspc | WIN  |LOWER | Enter| /Space  /       \Enter \  |SPACE | 0    |  .   | RAlt |
- *            |      |      |      |      |/       /         \      \ |      |      |      |      |
- *            `----------------------------------'           '------''---------------------------'
- */
-[_NUMPAD] = LAYOUT(
-  //,------------------------------------------------.                    ,---------------------------------------------------.
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   _______, KC_NUM,  XXXXXXX, XXXXXXX,XXXXXXX, XXXXXXX,
-  //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   KC_CIRC, KC_P7,  KC_P8,   KC_P9,   KC_ASTR, XXXXXXX,
-  //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   KC_MINS, KC_P4,  KC_P5,   KC_P6,   KC_EQL,  KC_PIPE,
-  //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,_______,   _______,KC_PLUS, KC_P1,  KC_P2,   KC_P3,   KC_SLSH, _______,
-  //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-              _______, OSM(MOD_MEH), _______, _______, _______,   _______, _______,  KC_P0,   KC_PDOT, _______
-  //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
-),
 };
 
 #ifdef RGBLIGHT_ENABLE
@@ -319,7 +291,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 	rgblight_set_layer_state(1, layer_state_cmp(state, _LOWER));
 	rgblight_set_layer_state(2, layer_state_cmp(state, _RAISE));
 	rgblight_set_layer_state(3, layer_state_cmp(state, _ADJUST));
-	rgblight_set_layer_state(4, layer_state_cmp(state, _NUMPAD));
     return state;
 }
 void keyboard_post_init_user(void) {
@@ -380,9 +351,6 @@ static void print_status_narrow(void) {
             break;
         case _ADJUST:
             oled_write_P(PSTR("Adj\n"), false);
-            break;
-        case _NUMPAD:
-            oled_write_P(PSTR("Nump\n"), false);
             break;
         default:
             oled_write_ln_P(PSTR("Undef"), false);
