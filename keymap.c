@@ -56,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,   KC_Q,     KC_W,     KC_F,     KC_P,     KC_B,                         KC_J,     KC_L,     KC_U,     KC_Y,     KC_SCLN,  KC_BSPC,
   KC_LSFT,  KC_A,     KC_R,     KC_S,     KC_T,     KC_G,                         KC_M,     KC_N,     KC_E,     KC_I,     KC_O,     KC_QUOT,
   KC_LCTL,  KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,     KC_MUTE,  KC_MUTE,  KC_K,     KC_H,     KC_COMM,  KC_DOT,   KC_SLSH,  KC_LSFT,
-                      KC_BSPC,  KC_LGUI,  KC_LOWER, KC_SPC,   KC_ENT,   KC_SPC,   KC_ENT ,  KC_RAISE, KC_RCTL,  KC_RALT
+                      KC_BSPC,  KC_LGUI,MO(_LOWER), KC_SPC,   KC_ENT,   KC_SPC,   KC_ENT, MO(_RAISE), KC_RCTL,  KC_RALT
 ),
 
 
@@ -214,6 +214,10 @@ bool oled_task_user(void) {
 
 #endif
 
+layer_state_t layer_state_set_user(layer_state_t state) {
+    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_COLEMAKDH:
@@ -224,31 +228,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_QWERTY:
             if (record->event.pressed) {
                 set_single_persistent_default_layer(_QWERTY);
-            }
-            return false;
-        case KC_LOWER:
-            if (record->event.pressed) {
-                layer_on(_LOWER);
-                update_tri_layer(_LOWER, _RAISE, _ADJUST);
-            } else {
-                layer_off(_LOWER);
-                update_tri_layer(_LOWER, _RAISE, _ADJUST);
-            }
-            return false;
-        case KC_RAISE:
-            if (record->event.pressed) {
-                layer_on(_RAISE);
-                update_tri_layer(_LOWER, _RAISE, _ADJUST);
-            } else {
-                layer_off(_RAISE);
-                update_tri_layer(_LOWER, _RAISE, _ADJUST);
-            }
-            return false;
-        case KC_ADJUST:
-            if (record->event.pressed) {
-                layer_on(_ADJUST);
-            } else {
-                layer_off(_ADJUST);
             }
             return false;
     }
