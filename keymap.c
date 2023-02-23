@@ -57,7 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_LSFT,  KC_A,     KC_R,     KC_S,     KC_T,     KC_G,                         KC_M,     KC_N,     KC_E,     KC_I,     KC_O,     KC_QUOT,
   KC_LCTL,  KC_Z,     KC_X,     KC_C,     KC_D,     KC_V,     KC_MUTE,  KC_MUTE,  KC_K,     KC_H,     KC_COMM,  KC_DOT,   KC_SLSH,  KC_LSFT,
                       KC_BSPC,  KC_LGUI,MO(_LOWER), KC_SPC,   KC_ENT,   KC_SPC,   KC_ENT, MO(_RAISE), KC_RCTL,  KC_RALT
-),
+  ),
 
 
 /*
@@ -81,7 +81,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,  KC_A,     KC_S,     KC_D,     KC_F,     KC_G,                         KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,  _______,
   _______,  KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     _______,  _______,  KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,  _______,
                       _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______
-),
+  ),
 
 /* LOWER
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -103,7 +103,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,  KC_EXLM,  KC_AT,    KC_HASH,  KC_DLR,   KC_PERC,                      KC_CIRC,  KC_AMPR,  KC_ASTR,  KC_LPRN,  KC_RPRN,  KC_PIPE,
   _______,  KC_EQL,   KC_MINS,  KC_PLUS,  KC_LCBR,  KC_RCBR,  _______,  _______,  KC_LBRC,  KC_RBRC,  KC_SCLN,  KC_COLN,  KC_BSLS,  _______,
                       _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______
-),
+  ),
 /* RAISE
  * ,----------------------------------------.                    ,-----------------------------------------.
  * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
@@ -124,7 +124,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,  KC_LALT,  KC_LCTL,  KC_LSFT,  XXXXXXX,  KC_CAPS,                      KC_PGDN,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_DEL,   KC_BSPC,
   _______,  KC_UNDO,  KC_CUT,   KC_COPY,  KC_PASTE, XXXXXXX,  _______,  _______,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  _______,
                       _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______
-),
+  ),
 /* ADJUST
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
@@ -210,8 +210,7 @@ bool oled_task_user(void) {
         render_logo();
     }
     return false;
-}
-
+  }
 #endif
 
 layer_state_t layer_state_set_user(layer_state_t state) {
