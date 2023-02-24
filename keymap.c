@@ -148,10 +148,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #ifdef OLED_ENABLE
 
 static void print_status_narrow(void) {
-    // Print current mode
-    oled_write_P(PSTR("\n\n\n\n"), false);
     oled_write_ln_P(PSTR("VOLTA"), false);
-
     switch (get_highest_layer(default_layer_state)) {
         case _COLEMAKDH:
             oled_write_ln_P(PSTR("CmkDH"), false);
@@ -162,26 +159,28 @@ static void print_status_narrow(void) {
         default:
             oled_write_ln_P(PSTR("Undef"), false);
     }
-    oled_write_P(PSTR("\n\n"), false);
-    // Print current layer
-    oled_write_ln_P(PSTR("LAYER"), false);
+
+    oled_write_ln_P(PSTR("\nLAYER"), false);
     switch (get_highest_layer(layer_state)) {
         case _COLEMAKDH:
         case _QWERTY:
-            oled_write_P(PSTR("Base\n"), false);
+            oled_write_ln_P(PSTR("Base\n"), false);
             break;
         case _RAISE:
-            oled_write_P(PSTR("Raise"), false);
+            oled_write_ln_P(PSTR("Raise"), false);
             break;
         case _LOWER:
-            oled_write_P(PSTR("Lower"), false);
+            oled_write_ln_P(PSTR("Lower"), false);
             break;
         case _ADJUST:
-            oled_write_P(PSTR("Adj\n"), false);
+            oled_write_ln_P(PSTR("Adj\n"), false);
             break;
         default:
             oled_write_ln_P(PSTR("Undef"), false);
     }
+
+    led_t led_usb_state = host_keyboard_led_state();
+    oled_write_ln_P(PSTR("\nCPSLK"), led_usb_state.caps_lock);
 }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
