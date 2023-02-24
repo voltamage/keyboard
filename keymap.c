@@ -30,9 +30,6 @@ enum sofle_layers {
 enum custom_keycodes {
     KC_COLEMAKDH = SAFE_RANGE,
     KC_QWERTY,
-    KC_LOWER,
-    KC_RAISE,
-    KC_ADJUST,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
